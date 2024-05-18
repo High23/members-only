@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1 Sign Up Form
+    form(method="post" class="form") 
+        label(for="firstName") First Name:
+        input(type="text", name="firstName" placeHolder="Epic" id="firstName")
+        label(for="lastName") Last Name:
+        input(type="text", name="firstName" placeHolder="User" id="firstName")  
+        label(for="email") Email:
+        input(type="email", name="firstName" placeHolder="EpicUser123@email.com" id="firstName")  
+        label(for="password") Password:
+        input(type="password", name="firstName", placeHolder="EpicPass321" id="firstName") 
+        button(type="submit") Sign Up
