@@ -23,10 +23,11 @@ router.post("/",[
     
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
-
         const user = new User({
-            username: req.body.username,
-            password: bcrypt.hash(req.body.password, 10)
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            username: req.body.email,
+            password: await bcrypt.hash(req.body.password, 10)
         });
         if (!errors.isEmpty()) {
             res.render("sign-up-form", {
