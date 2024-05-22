@@ -8,7 +8,6 @@ block content
         label(for="password") Password:
         input(type="password", name="password", placeHolder="EpicPass321" id="password" required)
         button(type="submit") Log in
-    if errors
+    if invalid
         ul #[strong Errors]
-            for error in errors
-                li!= error.msg
+            li #{invalid[0]}

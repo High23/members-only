@@ -18,10 +18,10 @@ router.post("/",[
     .escape(),
     body("email", "The email must be a valid email (gmail, outlook, protonmail, etc.).")
     .trim()
-    .isLength({min: 1, max: 50})
+    .isLength({min: 3, max: 100})
     .isEmail()
     .custom(async value => {
-        const user = await UserCollection.findUserByEmail(value);
+        const user = await User.findOne({ email: value });
         if (user) {
           throw new Error('E-mail already in use');
         }
@@ -46,6 +46,8 @@ router.post("/",[
     }),
     
     asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
         const user = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -53,6 +55,7 @@ router.post("/",[
             password: await bcrypt.hash(req.body.password, 10),
             membershipStatus: false
         });
+        
         if (!errors.isEmpty()) {
             res.render("sign-up-form", {
                 user: user,
