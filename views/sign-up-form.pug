@@ -1,14 +1,20 @@
 extends layout
 
 block content
-    h1 Sign Up Form
+    h1 Sign Up
     form(method="post" class="form") 
         label(for="firstName") First Name:
-        input(type="text", name="firstName" placeHolder="Epic" id="firstName" required)
+        input(type="text", name="firstName" placeHolder="Epic" id="firstName" required value=(undefined === user ? "" : user.firstName))
         label(for="lastName") Last Name:
-        input(type="text", name="lastName" placeHolder="User" id="lastName" required)  
+        input(type="text", name="lastName" placeHolder="User" id="lastName" required value=(undefined === user ? "" : user.lastName))  
         label(for="email") Email:
-        input(type="email", name="email" placeHolder="EpicUser123@email.com" id="email" required)  
+        input(type="email", name="email" placeHolder="EpicUser123@email.com" id="email" required value=(undefined === user ? "" : user.email))  
         label(for="password") Password:
-        input(type="password", name="password", placeHolder="EpicPass321" id="password" required) 
+        input(type="password", name="password", placeHolder="EpicPass321" id="password" required)
+        label(for="confirmPassword") Confirm password:
+        input(type="password", name="confirmPassword", placeHolder="Enter same password as before" id="confirmPassword" required) 
         button(type="submit") Sign Up
+    if errors
+        ul #[strong Errors]
+            for error in errors
+                li!= error.msg
