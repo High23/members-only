@@ -41,11 +41,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
+  new LocalStrategy(async (email, password, done) => {
     try {
-      const user = await User.findOne({ username: username });
+      const user = await User.findOne({ email: email });
       if (!user) {
-        return done(null, false, { message: "Incorrect username" });
+        return done(null, false, { message: "Incorrect email" });
       };
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
