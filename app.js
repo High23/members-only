@@ -10,6 +10,7 @@ const passport = require("passport");
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const signUpRouter = require('./routes/sign-up');
+const logInRouter = require('./routes/login');
 
 const User = require("./models/user");
 
@@ -74,6 +75,7 @@ passport.deserializeUser(async (id, done) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sign-up', signUpRouter);
+app.use('/login', logInRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
