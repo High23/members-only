@@ -1,14 +1,12 @@
 const express = require("express")
 const router = express.Router()
-const passport = require('passport')
+const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
 
-router.get("/", (req, res) => {
-    if (req.session.messages) {
-        return res.render("login", {invalid: req.session.messages})
-    }
-    res.render("login")
-})
+router.get("/", (req, res) => res.render("login"))
 
-router.post("/", passport.authenticate('local', { failureRedirect: '/login', failureMessage: "Invalid email/password", successRedirect: '/'}));
+router.post("/", asyncHandler(async function(req, res) {
+    
+}));
 
 module.exports = router
