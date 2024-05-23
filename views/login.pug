@@ -1,13 +1,14 @@
 extends layout
 
 block content
-    h1 Log in
-    form(method="post" class="form") 
-        label(for="email") Email:
-        input(type="email", name="email" placeHolder="EpicUser123@email.com" id="email" required value=(undefined === user ? "" : user.email))  
-        label(for="password") Password:
-        input(type="password", name="password", placeHolder="EpicPass321" id="password" required)
-        button(type="submit") Log in
-    if invalid
-        ul #[strong Errors]
-            li #{invalid[0]}
+    div
+        h1 Log in
+        form(method="post" class="form") 
+            label(for="username") Email:
+            input(type="email", name="username" placeHolder="EpicUser123@email.com" id="username" required value=(undefined === user ? "" : user.email))  
+            label(for="password") Password:
+            input(type="password", name="password", placeHolder="EpicPass321" id="password" required)
+            button(type="submit") Log in
+        if invalid
+            ul #[strong Errors]
+                li #{invalid[0]}
