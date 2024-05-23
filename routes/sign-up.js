@@ -27,7 +27,7 @@ router.post("/",[
         }
     })
     .escape(),
-    body("password", "The password needs a uppercase(A), lowercase(A) character as well as a number(1) and a symbol(#).").isStrongPassword({
+    body("password", "The password needs a uppercase(A), lowercase(A) character as well as a number(1), a symbol(#) and have a minimum length of 7.").isStrongPassword({
         minLength: 7,
         minLowercase: 1,
         minUppercase: 1,
