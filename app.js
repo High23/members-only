@@ -6,6 +6,7 @@ const logger = require('morgan');
 const session = require("express-session");
 const LocalStrategy = require("passport-local").Strategy;
 const passport = require("passport");
+const bcrypt = require("bcryptjs")
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -41,9 +42,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 passport.use(
-  new LocalStrategy(async (email, password, done) => {
+  new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await User.findOne({ email: email });
+      const user = await User.findOne({ email: username });
       if (!user) {
         return done(null, false, { message: "Incorrect email" });
       };
