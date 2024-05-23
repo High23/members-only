@@ -1,0 +1,9 @@
+extends layout 
+
+block content 
+    div 
+        h1 Are you sure you want to log out?
+        form(method="post")
+            button(type="button") 
+                a(href="/") Go back
+            button(type="submit") Log out
