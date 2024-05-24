@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    div 
+        if (result)
+            p #{result}
+        else 
+            h1 Enter the member password to join the club!!!
+            form(method="post")
+                label(for="membersCode") 
+                input(type="text" placeHolder="Super secret member code" name="membersCode" id="membersCode")
+                button(type="submit") Join
