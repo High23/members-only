@@ -5,11 +5,13 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     nav
-      a(href="/") Home
+      a(href="/") Home 
+      if (membership)
+        a(href="/join-members") Join the club 
       if (authenticated)
-        a(href="/join-members") Join the club
-        a(href="/logout") Log out
+        a(href="/message/create") Create a message 
+        a(href="/logout") Log out 
       else
-        a(href="/sign-up") Sign Up
-        a(href="/login") Log In
+        a(href="/sign-up") Sign Up 
+        a(href="/login") Log In 
     block content
