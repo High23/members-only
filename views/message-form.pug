@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    h1 Create Message
+    form(method="post")
+        label(for="title")  
+        input#title(type="text", name="title" placeHolder="Message title" minLength=3 maxLength=75 value=(undefined === message ? "" : message.title))
+        label(for="date")
+        input#date(type="datetime-local", name="date" value=(undefined === message ? "" : message.date))
+        label(for="text") 
+        textarea#text(name="text" placeHolder="Message text" minLength=3 maxLength=250 cols=30 rows=10 )=(undefined === message ? "" : message.text)
+        button(type="submit") Create 
