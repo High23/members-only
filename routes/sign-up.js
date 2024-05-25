@@ -47,19 +47,22 @@ router.post("/",[
     
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
-
+        const isAdmin = req.body.isAdmin === 'on' ? true : false;
+        const membership = isAdmin === true ? true : false;
         const user = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
             password: await bcrypt.hash(req.body.password, 10),
-            membershipStatus: false
+            membershipStatus: membership,
+            admin: isAdmin,
         });
         
         if (!errors.isEmpty()) {
             res.render("sign-up-form", {
                 user: user,
                 errors: errors.array(),
+                checked: isAdmin,
             });
             return
         };
