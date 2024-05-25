@@ -6,7 +6,7 @@ html
   body
     nav
       a(href="/") Home 
-      if (membership)
+      if (!membership && authenticated)
         a(href="/join-members") Join the club 
       if (authenticated)
         a(href="/message/create") Create a message 
