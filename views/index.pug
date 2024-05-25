@@ -2,18 +2,28 @@ extends layout
 
 block content
   h1= "Message Board"
-  if messages.length
+  if (!authenticated)
+    div.sign-up-link
+      a(href="/sign-up") Sign up 
+      span to create messages!! 
+  else if (!membership && authenticated)
     p Only members can see the author and timestamp! 
       a(href="/join-members") Join the club.
-    ul 
-      for message in messages
-        li
-          h3= message.title 
-          p= message.text
-          if (membership)
-            span Created on #{message.timestamp} 
-            span By #{message.author.fullName}
-
-  else 
+  else if (!messages.length)
     p There are no messages. 
-      a(href="/message/create") Create one! 
+      a(href="/message/create") Create one!
+          
+  ul 
+    for message in messages
+      li.message
+        h2= message.title 
+        p= message.text
+        if (membership)
+          span Created on: #{message.timestamp} 
+          span Author: #{message.author.fullName}
+        if (checked)
+          form(method='POST' class="form")
+                div.form-group
+                    input#messageid(type='hidden', autocomplete="off" name='messageid', value=message._id )
+
+                button.btn.btn-primary(type='submit') Delete
