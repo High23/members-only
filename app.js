@@ -6,7 +6,9 @@ const logger = require('morgan');
 const session = require("express-session");
 const LocalStrategy = require("passport-local").Strategy;
 const passport = require("passport");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
+const compression = require('compression');
+const helmet = require('helmet')
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -18,6 +20,15 @@ const User = require("./models/user");
 require('dotenv').config();
 
 const app = express();
+
+app.use(compression())
+app.use(helmet());
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 25,
+});
+app.use(limiter);
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
@@ -93,12 +104,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-const hostname = '127.0.0.1'
-const port = 8080
-
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`)
-})
 
 module.exports = app;
