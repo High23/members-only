@@ -5,7 +5,7 @@ const User = require('../models/user');
 const Message = require('../models/message');
 const expressAsyncHandler = require('express-async-handler');
 const router = express.Router();
-const { format } = require('date-fns')
+const { UTCDate } = require('@date-fns/utc')
 
 /* GET home page. */
 router.get('/', expressAsyncHandler(async function(req, res, next) {
@@ -15,6 +15,7 @@ router.get('/', expressAsyncHandler(async function(req, res, next) {
     return res.render('index', { 
       authenticated: true, 
       membership: req.user.membershipStatus, 
+      checked: req.user.admin,
       messages: messages
     });
   };
@@ -23,7 +24,11 @@ router.get('/', expressAsyncHandler(async function(req, res, next) {
 }));
 
 router.get('/logout', isAuth, function(req, res, next) {
-  return res.render('logout', { authenticated: true });
+  return res.render('logout', { 
+    authenticated: true,
+    membership: req.user.membershipStatus, 
+    checked: req.user.admin, 
+  });
 });
 
 router.post('/logout', function(req, res, next) {
@@ -37,7 +42,11 @@ router.post('/logout', function(req, res, next) {
 });
 
 router.get('/join-members', isAuth, function(req, res, next) {
-  return res.render('join', {authenticated: true})
+  if (req.user.membershipStatus === false) {
+    return res.render('join', {authenticated: true})
+  } else {
+      res.status(401).send("You're already a member.")
+  }
 });
 
 router.post('/join-members', isAuth, body('membersCode').trim(), expressAsyncHandler(async function(req, res, next) {
@@ -62,16 +71,21 @@ router.get("/message/create", isAuth, expressAsyncHandler(async function(req, re
 router.post("/message/create", isAuth, [
   body("title", "The message title must contain a character count of at least 3 and a max of 75")
   .trim()
-  .isLength({min: 3, max: 75})
+  .isLength({min: 2, max: 75})
   .escape(),
   body("text", "The text must contain a character count of at least 3 and a max of 250")
   .trim()
-  .isLength({min: 3, max: 250})
+  .isLength({min: 2, max: 250})
   .escape(),
 
   expressAsyncHandler(async function(req, res, next) {
     const errors = validationResult(req);
-    const formattedDate = format(new Date(req.body.date), 'MM/dd/yyyy')
+    let formattedDate;
+    if (req.body.date === '') {
+      formattedDate = new UTCDate(new Date())
+    } else {
+      formattedDate = new UTCDate(req.body.date)
+    }
     const message = new Message({
       title: req.body.title,
       text: req.body.text,
@@ -90,5 +104,14 @@ router.post("/message/create", isAuth, [
     }
   })]
 );
+
+router.post('/', isAuth, expressAsyncHandler(async function(req, res, next) {
+  if (req.user.admin === true) {
+    await Message.findByIdAndDelete(req.body.messageid)
+    res.redirect('/')
+  } else {
+      res.status(401).send("You are not allowed to do that!")
+  }
+}))
 
 module.exports = router;
