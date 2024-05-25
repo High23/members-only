@@ -8,12 +8,20 @@ block content
             input(type="text", name="firstName" placeHolder="Epic" id="firstName" required value=(undefined === user ? "" : user.firstName))
             label(for="lastName") Last Name:
             input(type="text", name="lastName" placeHolder="User" id="lastName" required value=(undefined === user ? "" : user.lastName))  
-            label(for="email") Email (Will be used as username):
+            label(for="email") Email:
             input(type="email", name="email" placeHolder="EpicUser123@email.com" id="email" required value=(undefined === user ? "" : user.email))  
             label(for="password") Password:
             input(type="password", name="password", placeHolder="EpicPass321" id="password" required)
             label(for="confirmPassword") Confirm password:
             input(type="password", name="confirmPassword", placeHolder="Enter same password as before" id="confirmPassword" required) 
+            if (checked)
+                div.admin-checkbox
+                    label(for="isAdmin") Admin
+                    input(type='checkbox', name='isAdmin' id='isAdmin' checked)
+            else
+                div.admin-checkbox
+                    label(for="isAdmin") Admin
+                    input(type='checkbox', name='isAdmin' id='isAdmin')
             button(type="submit") Sign Up
         if errors
             ul #[strong Errors]
