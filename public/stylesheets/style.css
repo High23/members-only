@@ -6,3 +6,52 @@ body {
 a {
   color: #00B7FF;
 }
+
+nav {
+  display: flex;
+  gap: 20px;
+  font-size: 1.2rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.sign-up-link {
+  font-size: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form > input, .form > textarea {
+  max-width: 400px;
+}
+
+.form > button {
+  max-width: 100px;
+  margin-top: 5px;
+}
+
+.admin-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.message {
+  display: grid;
+  max-width: 900px;
+  gap: 5px;
+}
+
+.message > p {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+h2 {
+  margin-top: 0;
+}
